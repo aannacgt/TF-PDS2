@@ -556,6 +556,9 @@ DOCTEST_MSVC_SUPPRESS_WARNING_POP
 #endif // DOCTEST_CONFIG_INCLUDE_TYPE_TRAITS
 
 namespace doctest {
+#define CATCH_CONFIG_MAIN
+#include "catch.hpp"
+#include "Turma.hpp"
 
 using std::size_t;
 
@@ -7104,3 +7107,27 @@ DOCTEST_SUPPRESS_COMMON_WARNINGS_POP
 #undef NOMINMAX
 #undef DOCTEST_UNDEF_NOMINMAX
 #endif // DOCTEST_UNDEF_NOMINMAX
+
+TEST_CASE("Criar turmas com códigos únicos", "[Turma]") {
+    Turma minhaTurma;
+
+    SECTION("Turma com código único") {
+        minhaTurma.criarTurma("T001", 30, "Prof. A");
+        REQUIRE(minhaTurma.getCodigo() == "T001");
+        REQUIRE(minhaTurma.getNumeroVagas() == 30);
+        REQUIRE(minhaTurma.getProfessor() == "Prof. A");
+    }
+
+    SECTION("Turma com código duplicado") {
+        minhaTurma.criarTurma("T002", 25, "Prof. B");
+        REQUIRE(minhaTurma.getCodigo() == "T002");
+        REQUIRE(minhaTurma.getNumeroVagas() == 25);
+        REQUIRE(minhaTurma.getProfessor() == "Prof. B");
+
+        // Tentar criar uma turma com o mesmo código deve falhar
+        minhaTurma.criarTurma("T002", 40, "Prof. C");
+        REQUIRE(minhaTurma.getCodigo() == "T002");
+        REQUIRE(minhaTurma.getNumeroVagas() == 25); // A quantidade de vagas não deve mudar
+        REQUIRE(minhaTurma.getProfessor() == "Prof. B"); // O professor não deve mudar
+    }
+}
