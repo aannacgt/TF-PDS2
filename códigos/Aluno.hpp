@@ -1,5 +1,3 @@
-// aluno.hpp
-
 #ifndef ALUNO_HPP
 #define ALUNO_HPP
 
@@ -30,4 +28,4 @@ private:
     std::string senha;
 };
 
-#endif // ALUNO_HPP
+#endif 

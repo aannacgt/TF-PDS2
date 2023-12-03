@@ -1,5 +1,3 @@
-// aluno.cpp
-
 #include "Aluno.hpp"
 
 Aluno::Aluno() : nome(""), sobrenome(""), email(""), idade(0), sexo(' '), login(""), senha("") {}

@@ -1,5 +1,3 @@
-// materia.hpp
-
 #ifndef MATERIA_HPP
 #define MATERIA_HPP
 
@@ -13,11 +11,12 @@ public:
     std::string getCodigo() const;
     std::string getNome() const;
     std::string getDepartamento() const;
-
+    void cadastrarProfessor(Professor& professor);
+	
 private:
     std::string codigo;
     std::string nome;
     std::string departamento;
 };
 
-#endif // MATERIA_HPP
+#endif

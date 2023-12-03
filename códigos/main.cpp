@@ -1,5 +1,3 @@
-// main.cpp
-
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "doctest.h"
 
@@ -48,7 +46,7 @@ TEST_CASE("Cadastro de Professor") {
     CHECK_EQ(professor.getAreaAtuacao(), "Matemática");
 }
 
-TEST_CASE("Cadastro de Turma e Organização de Alunos") {
+TEST_CASE("Cadastro de Turma") {
     Sistema sistema;
     Aluno aluno1("Aluno1", "Sobrenome", "aluno1@example.com", 20, 'M', "login1", "senha");
     Aluno aluno2("Aluno2", "Sobrenome", "aluno2@example.com", 22, 'F', "login2", "senha");
@@ -62,10 +60,32 @@ TEST_CASE("Cadastro de Turma e Organização de Alunos") {
     CHECK_EQ(turma.getNumeroVagas(), 30);
     CHECK_EQ(turma.getProfessor(), "Prof. Silva");
 
-    // Teste de organização de alunos na turma
-    // (Você precisará adicionar funcionalidades ao seu sistema para testar essa parte)
-    // Exemplo hipotético:
-    // sistema.organizarAlunoNaTurma(aluno1, turma);
-    // sistema.organizarAlunoNaTurma(aluno2, turma);
-    // CHECK_EQ(turma.getNumeroAlunos(), 2);
 }
+
+TEST_CASE("Cadastro de Notas e Frequências") {
+    Sistema sistema;
+    Aluno aluno("Aluno1", "Sobrenome", "aluno1@example.com", 20, 'M', "login1", "senha");
+    Professor professor("Prof. Silva", "prof.silva@example.com", 35, 'F', "Matemática");
+    sistema.cadastrarAluno(aluno);
+
+    Turma turma("TUR123", 30, "Prof. Silva");
+    sistema.criarNovaMateria("MAT123", "Matemática", "Departamento de Ciências Exatas");
+    turma.associarProfessor(professor);
+
+    // Teste de cadastro de notas e frequências
+    CHECK_NOTHROW(turma.cadastrarNotaFrequencia(professor, aluno, 8.5, 90.0));
+
+    // Teste de consulta de notas e frequências
+    auto notasFrequencia = turma.consultarNotaFrequencia(aluno);
+    CHECK_EQ(notasFrequencia.first, 8.5);
+    CHECK_EQ(notasFrequencia.second, 90.0);
+}
+
+TEST_CASE("Associação e Desassociação de Professores à Turma") {
+    Turma turma("TUR123", 30, "Prof. Silva");
+    Professor professor1("Prof. Silva", "prof.silva@example.com", 35, 'F', "Matemática");
+    Professor professor2("Prof. Souza", "prof.souza@example.com", 40, 'M', "Física");
+
+    // Teste de associação de professores à turma
+    turma.associarProfessor(professor1);
+    CHECK_EQ(turma.getProfessores().size(), 1

@@ -1,5 +1,3 @@
-// professor.hpp
-
 #ifndef PROFESSOR_HPP
 #define PROFESSOR_HPP
 
@@ -15,7 +13,7 @@ public:
     int getIdade() const;
     char getSexo() const;
     std::string getAreaAtuacao() const;
-
+    void gerarLoginSenhaAutomaticos(); // Método para gerar login e senha automaticamente
 private:
     std::string nome;
     std::string email;
@@ -24,4 +22,4 @@ private:
     std::string areaAtuacao;
 };
 
-#endif // PROFESSOR_HPP
+#endif
