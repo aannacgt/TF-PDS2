@@ -3,6 +3,52 @@
 Turma::Turma(const std::string& codigo, int numeroVagas, const std::string& professor)
     : codigo(codigo), numeroVagas(numeroVagas), professor(professor) {}
 
+Aluno::Aluno() {
+    // Construtor padrão
+}
+
+Aluno::Aluno(const std::string& nome, const std::string& sobrenome, const std::string& email, int idade, char sexo, const std::string& login, const std::string& senha)
+    : nome(nome), sobrenome(sobrenome), email(email), idade(idade), sexo(sexo), login(login), senha(senha) {
+    // Construtor com parâmetros
+}
+
+Aluno::Materia* Aluno::encontrarMateria(const std::string& nomeMateria) {
+    for (auto& materia : materias) {
+        if (materia.nomeMateria == nomeMateria) {
+            return &materia;
+        }
+    }
+    return nullptr;
+}
+
+std::string Aluno::getNome() const {
+    return nome;
+}
+
+std::string Aluno::getSobrenome() const {
+    return sobrenome;
+}
+
+std::string Aluno::getEmail() const {
+    return email;
+}
+
+int Aluno::getIdade() const {
+    return idade;
+}
+
+char Aluno::getSexo() const {
+    return sexo;
+}
+
+std::string Aluno::getLogin() const {
+    return login;
+}
+
+std::string Aluno::getSenha() const {
+    return senha;
+}
+
 // Implementação dos métodos de acesso
 std::string Turma::getCodigo() const { return codigo; }
 int Turma::getNumeroVagas() const { return numeroVagas; }
@@ -76,4 +122,45 @@ void Turma::desassociarProfessor(const Professor& professor) {
     } else {
         std::cout << "Professor não associado à turma.\n";
     }
+
+	void Aluno::adicionarMateria(const std::string& nomeMateria, const std::string& nomeProfessor) {
+    Materia materia;
+    materia.nomeMateria = nomeMateria;
+    materia.nomeProfessor = nomeProfessor;
+    materia.nota = 0.0; // Inicializando a nota com 0.0
+    materias.push_back(materia);
+}
+
+void Aluno::adicionarNota(const std::string& nomeMateria, double nota) {
+    for (auto& materia : materias) {
+        if (materia.nomeMateria == nomeMateria) {
+            materia.nota = nota;
+            return;
+        }
+    }
+    std::cerr << "Erro: Matéria não encontrada\n";
+}
+
+void Aluno::mostrarNotas() const {
+    std::cout << "Notas do aluno:\n";
+    for (const auto& materia : materias) {
+        std::cout << "- " << materia.nomeMateria << ": " << materia.nota << "\n";
+    }
+}
+
+void Aluno::adicionarFaltas(const std::string& nomeMateria, int faltas) {
+    Materia* materia = encontrarMateria(nomeMateria);
+    if (materia) {
+        materia->faltas += faltas;
+    } else {
+        std::cerr << "Erro: Matéria não encontrada\n";
+    }
+}
+
+void Aluno::mostrarFaltas() const {
+    std::cout << "Faltas do aluno:\n";
+    for (const auto& materia : materias) {
+        std::cout << "- " << materia.nomeMateria << ": " << materia.faltas << " faltas\n";
+    }
+}
 }
